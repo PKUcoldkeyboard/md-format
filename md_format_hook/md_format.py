@@ -37,7 +37,7 @@ def format_file(filename, nouns):
 
 def main():
     try:
-        nouns = get_nouns('../dicts.csv')
+        nouns = get_nouns('dicts.csv')
         for filename in glob('*.md'):
             format_file(filename, nouns)
     except Exception as e:
