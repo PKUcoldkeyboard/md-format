@@ -3,7 +3,8 @@ from __future__ import annotations
 import re
 import pangu
 import pandas as pd
-from glob import glob
+import argparse
+from typing import Sequence
 
 
 def get_nouns(csv_file):
@@ -35,13 +36,21 @@ def format_file(filename, nouns):
         print(f"Error occurred while formatting file {filename}: {e}")
 
 
-def main():
-    try:
-        nouns = get_nouns('dicts.csv')
-        for filename in glob('*.md'):
+def main(argv: Sequence[str] | None = None) -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument('filenames', nargs='*', help='Filenames to check')
+    args = parser.parse_args(argv)
+
+    retv = 0
+
+    nouns = get_nouns('dicts.csv')
+    for filename in args.filenames:
+        if filename.endswith('.md'):
             format_file(filename, nouns)
-    except Exception as e:
-        print(f"Error occurred in main function: {e}")
+            print(f'{filename} is formatted with pangu and dicts.csv')
+            retv = 1
+
+    return retv
 
 
 if __name__ == '__main__':
