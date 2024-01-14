@@ -1,0 +1,6 @@
+- id: md-format
+  name: format md file
+  description: adds reasonable spaces between Chinese and English and corrects the case of special nouns
+  entry: md-format
+  language: python
+  types: [text]
