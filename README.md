@@ -8,7 +8,7 @@ Add this to your `.pre-commit-config.yaml` :
 
 ```yaml
 - repo: https://github.com/PKUcoldkeyboard/md-format
-  rev: 0.0.4
+  rev: 0.0.5
   hooks:
   - id: md-format
 ```

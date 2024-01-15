@@ -4,14 +4,7 @@ import re
 import pangu
 import argparse
 from typing import Sequence
-
-
-def match_pattern(patterns, content):
-    for pattern in patterns:
-        if re.search(pattern, content):
-            return 1
-    return 0
-
+from pangu import ANY_CJK
 
 def format_file(filename, patterns):
     try:
@@ -20,8 +13,12 @@ def format_file(filename, patterns):
             content = f.read()
 
         for pattern in patterns:
-            if re.search(pattern, content):
-                retv = 1
+            # 搜索正则匹配到的所有字符串，如果这些字符串有一个满足 ANY_CJK.search(text) 的话，retv = 1
+            groups = re.findall(pattern, content)
+            for group in groups:
+                if ANY_CJK.search(group):
+                    retv = 1
+                    break
             content = re.sub(
                 pattern, lambda m: pangu.spacing_text(m.group(0)), content)
 
